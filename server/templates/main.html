@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+
+    
+    <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="{{ STATIC_URL }}/jquery-2.0.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/bootstrap/js/bootstrap.min.js">
+    </script>
+
+    <script>
+      COMPUTER_PNG_URL = "{{ STATIC_URL }}/img/computer.png";
+      COMPUTER_SMALL_PNG_URL = "{{ STATIC_URL }}/img/computer_small.png";
+      TO_SUBMIT_TO_URL ="{% url views.add_links %}";
+      TO_GET_UPDATES_URL = "{% url views.get_updates %}";
+      
+    </script>
+
+    <style type="text/css">
+      body {
+        padding-top: 65px;
+        padding-bottom: 40px;
+        height: 80%;
+        width:95%;
+      }
+      html {
+        height: 100%;
+        body: 100%;
+      }
+      
+      .sidebar-nav-fixed {
+         position: absolute;
+         width:250px;
+         height: 70%;
+         top: 80px;
+         right: 3%;
+      }
+      map_canvas img {
+        max-width: none;
+      }      
+    </style>    
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="{{ STATIC_URL }}/stanford_map.js"></script>
+    <script src="{{ STATIC_URL }}/host_group.js"></script>
+
+    
+    
+    <script>
+      $(document).ready( map_initialize );
+    </script>
+  </head>
+
+  
+  <body>
+
+    <!-- Takes care of the navbar at top of page -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Networking</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+            </p>
+
+            <ul class="nav">
+            </ul>
+          </div><!--/.nav-collapse -->
+
+          
+        </div> <!-- closes container fluid -->
+      </div> <!-- closes navbar-inner -->
+    </div> <!-- closes navbar -->
+
+
+    <div class="container-fluid" style="width:100%; height:100%">
+      <!-- notification area -->
+      <div class="well sidebar-nav-fixed ">
+        <h4>The Stanford Netowrk </h4>
+        <hr/>
+
+        <!-- To submit more links -->
+        <table>
+          <tr>
+            <td>IP 1: </td><td><input type="text" id="ip_addr_1" name="ip_addr_1"/></td>
+          </tr>
+          <tr>
+            <td>Host 1: </td><td><input type="text" id="hostname_1" name="hostname_1"/></td>
+          </tr>
+          <tr><td></td><td></td></tr>
+          <tr><td></td><td></td></tr>        
+          <tr>
+            <td>IP 2: </td><td><input type="text" id="ip_addr_2" name="ip_addr_2"/></td>
+          </tr>
+          <tr>
+            <td>Host 2: </td><td><input type="text" id="hostname_2" name="hostname_2"/></td>
+          </tr>
+        </table>
+        <br/>
+        <input type="submit" value="submit" id="submitter">
+        
+        
+        <div id="notification-area">          
+        </div>
+      </div><!--/.well -->  
+      
+      <div id="map-canvas" style="width:75%; height:100%">
+      </div>
+
+    </div> <!-- closes container-fluid -->
+    
+
+  </body>
+
+</html>
