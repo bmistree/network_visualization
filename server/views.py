@@ -122,7 +122,7 @@ def get_updates_from(updates_since):
                 })
     for node in nodes:
         updated_nodes.append({
-                'lattitude': node.lattitude,
+                'latitude': node.latitude,
                 'longitude': node.longitude,
                 'ip_addr': node.ip_addr
                 })
@@ -170,15 +170,15 @@ def add_node(ip,hostname):
     
     nodes = models.Node.objects.filter(ip_addr=canon_ip)
     if len(nodes) == 0:
-        lattitude, longitude = get_lat_long(canon_ip)
+        latitude, longitude = get_lat_long(canon_ip)
 
         print '\nGotten latt + long\n'
-        print lattitude
+        print latitude
         print longitude
         print '\n\n'
         
         node = models.Node(
-            hostname=hostname,ip_addr=canon_ip,lattitude=lattitude,
+            hostname=hostname,ip_addr=canon_ip,latitude=latitude,
             longitude=longitude)
         node.save()
         return node,True

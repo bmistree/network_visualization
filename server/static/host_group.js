@@ -1,9 +1,9 @@
 var markers_array;
 
-function Host(ip_addr,lattitude,longitude)
+function Host(ip_addr,latitude,longitude)
 {
     this.ip_addr = ip_addr;
-    this.lattitude = lattitude;
+    this.latitude = latitude;
     this.longitude = longitude;
 }
 
@@ -14,7 +14,7 @@ function HostGroup(center_lat,center_long)
     this.id = ++_host_group_uid_generator;
     this.hosts_in_group = [];
     this.hosts_in_group_dict = {};
-    this.center_lattitude = center_lat;
+    this.center_latitude = center_lat;
     this.center_longitude = center_long;
 }
 
@@ -26,8 +26,8 @@ HostGroup.prototype.add_if_can = function(host_to_add,within_radius_lat_long)
     var within_radius_squared = within_radius_lat_long*within_radius_lat_long;
 
     var dist_squared = distance_squared(
-        host_to_add.lattitude, host_to_add.longitude,
-        this.center_lattitude, this.center_longitude);
+        host_to_add.latitude, host_to_add.longitude,
+        this.center_latitude, this.center_longitude);
 
     if (dist_squared < within_radius_squared)
     {
@@ -53,7 +53,7 @@ HostGroup.prototype.draw = function(map)
 HostGroup.prototype._draw_icon = function (map)
 {
     var lat_long = new google.maps.LatLng(
-        this.center_lattitude,this.center_longitude);
+        this.center_latitude,this.center_longitude);
     
     var comp_marker = new google.maps.Marker(
         {
@@ -98,7 +98,7 @@ HostGroup.prototype._draw_circle = function (map)
 {
     var circle_radius = get_circle_radius(map,this.hosts_in_group.length);
     var lat_long = new google.maps.LatLng(
-        this.center_lattitude,this.center_longitude);
+        this.center_latitude,this.center_longitude);
     var marker = new google.maps.Circle(
         {
             strokeColor: '#FF0000',

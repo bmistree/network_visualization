@@ -6,7 +6,7 @@ var TO_GET_UPDATES_URL;
 
 UPDATE_PERIOD_MS = 5000;
 
-STANFORD_LATTITUDE = 37.426;
+STANFORD_LATITUDE = 37.426;
 STANFORD_LONGITUDE = -122.17054;
 
 NOTIFICATION_AREA_DIV_ID = 'notification-area';
@@ -25,7 +25,7 @@ function map_initialize()
     var map_options =  {
         zoom: 16,
         center: new google.maps.LatLng(
-            STANFORD_LATTITUDE, STANFORD_LONGITUDE),
+            STANFORD_LATITUDE, STANFORD_LONGITUDE),
         //mapTypeId: google.maps.MapTypeId.ROADMAP
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
@@ -65,7 +65,7 @@ function query_server()
                 for (var node_index in nodes)
                 {
                     var node = nodes[node_index];
-                    add_host(node.lattitude, node.longitude,node.ip_addr);
+                    add_host(node.latitude, node.longitude,node.ip_addr);
                 }
                 for (var link_index in links)
                 {
@@ -125,9 +125,9 @@ function get_cluster_radius()
 function tests()
 {
     // create random hosts
-    add_host(STANFORD_LATTITUDE, STANFORD_LONGITUDE,'test');
+    add_host(STANFORD_LATITUDE, STANFORD_LONGITUDE,'test');
     for (var i = 0; i < 10; ++i)
-        add_host(STANFORD_LATTITUDE + i*.001, STANFORD_LONGITUDE,'test' +i);
+        add_host(STANFORD_LATITUDE + i*.001, STANFORD_LONGITUDE,'test' +i);
 
     // create random links
     for (var i = 0; i < 10; ++i)
@@ -152,9 +152,9 @@ function add_link(ip_addr_a,ip_addr_b)
         });
 }
 
-function add_host(lattitude,longitude,title)
+function add_host(latitude,longitude,title)
 {
-    var new_host = new Host(title,lattitude,longitude);
+    var new_host = new Host(title,latitude,longitude);
     all_hosts.push(new_host);
 }
 
@@ -187,7 +187,7 @@ function display_hosts()
         if (! added)
         {
             var host_group = new HostGroup(
-                host_to_add.lattitude,host_to_add.longitude);
+                host_to_add.latitude,host_to_add.longitude);
             host_ips_to_groups[host_to_add.ip_addr] = host_group;
             host_groups.push(host_group);
             // ensure adding by putting a number > 0 as second arg.
@@ -243,9 +243,9 @@ function create_connections_between_hosts()
             var group_b = link_to_draw.group_b;
             var path = [
                 new google.maps.LatLng(
-                    group_a.center_lattitude,group_a.center_longitude),
+                    group_a.center_latitude,group_a.center_longitude),
                 new google.maps.LatLng(
-                    group_b.center_lattitude,group_b.center_longitude)];
+                    group_b.center_latitude,group_b.center_longitude)];
 
             // FIXME: use count for strokeWeight
             var link_line = new google.maps.Polyline(

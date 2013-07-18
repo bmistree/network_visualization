@@ -9,7 +9,7 @@ class Node(models.Model):
     hostname = models.CharField(max_length=256)
     ip_addr = models.CharField(max_length=15)
     creation_date = models.DateTimeField(auto_now = True)
-    lattitude = models.FloatField()
+    latitude = models.FloatField()
     longitude = models.FloatField()
     
     class Meta:
@@ -23,3 +23,10 @@ class Links(models.Model):
     
     class Meta:
         app_label = 'server'
+
+
+class IPRange(models.Model):
+    lower_bound = models.PositiveIntegerField()
+    upper_bound = models.PositiveIntegerField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
