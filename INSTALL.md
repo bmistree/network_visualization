@@ -30,10 +30,17 @@ server/basesettings.py for more settings to override.
 Once you're satisfied with the settings, you need to sync the
 database, setting up all the tables Django will need to run the site:
 
+
     python server/manage.py syncdb
+
+    For each fixture, 
+      python server/manage.py loaddata <fixture name>
+    
     python server/manage.py migrate nodes
 
 You'll probably be prompted for an admin account. Create it now.
+
+
 
 Running
 -------

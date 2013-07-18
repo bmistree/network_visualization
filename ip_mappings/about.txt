@@ -1,0 +1,4 @@
+IP to building mappings collected from map service.
+
+Can get a file that shows ranges of ip addresses per building from an
+ITS page at Stanford.  (Requires SUNET login.)
