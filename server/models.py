@@ -30,3 +30,7 @@ class IPRange(models.Model):
     upper_bound = models.PositiveIntegerField()
     latitude = models.FloatField()
     longitude = models.FloatField()
+    
+    class Meta:
+        app_label = 'server'
+

@@ -5,7 +5,7 @@ import pickle
 import json
 from stanford_to_lat_long_mappings import stanford_to_lat_long_mappings
 
-IP_RANGE_MODEL = 'IPRange'
+IP_RANGE_MODEL = 'server.IPRange'
 
 
 class IPRange(object):
@@ -34,7 +34,7 @@ class IPRange(object):
         str_ip_addr = str_ip_addr.split('.')
         to_return = 0
         for i in range(0,len(str_ip_addr)):
-            multiplier = 256 ** (4-i)
+            multiplier = 256 ** (3-i)
             to_return += int(str_ip_addr[i])*multiplier
         return to_return
         
@@ -43,6 +43,7 @@ class IPRange(object):
 
     def dictify(self,pk,):
         lat_long_array = stanford_to_lat_long_mappings[self.group_name]
+
         # first element is latitude, second element is a longitude
         dictified = {
             'model': IP_RANGE_MODEL,
