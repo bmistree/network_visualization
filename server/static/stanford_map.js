@@ -11,7 +11,10 @@ STANFORD_LONGITUDE = -122.17054;
 
 NOTIFICATION_AREA_DIV_ID = 'notification-area';
 
+// each element is a Host object
 var all_hosts = [];
+// each link is an object with field a that is an ip address (string)
+// and field b that is also an ip address (string)
 var all_links = [];
 var host_groups = [];
 var host_ips_to_groups = {};

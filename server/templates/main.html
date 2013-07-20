@@ -5,6 +5,8 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
+    <script src="{{ STATIC_URL }}/sigma.min.js"></script>
+    <script src="{{ STATIC_URL }}/sigma.forceatlas2.js"></script>
     
     <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <script src="{{ STATIC_URL }}/jquery-2.0.2.js"></script>
@@ -113,9 +115,16 @@
         </div>
       </div><!--/.well -->  
       
-      <div id="map-canvas" style="width:75%; height:100%">
+      <div id="map-canvas" style="width:75%; height:100%;">
+      <!-- <div id="map-canvas" style="width:45%; height:100%;"> -->
       </div>
 
+
+      <!-- Used to render subgraph using sigma.js -->
+      <div id="sigma-canvas" style="width: 400px; height: 400px; background-color:#222;">
+      </div>
+
+      
     </div> <!-- closes container-fluid -->
     
 

@@ -102,6 +102,7 @@ def get_updates_from(updates_since):
 
     @returns json string
     '''
+
     if updates_since is None:
         links = models.Links.objects.all()
         nodes = models.Node.objects.all()
@@ -110,16 +111,16 @@ def get_updates_from(updates_since):
         links = models.Links.objects.filter(creation_date__gte = dt)
         nodes = models.Node.objects.filter(creation_date__gte = dt)
         
-
     time_str = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     updated_links = []
     updated_nodes = []
-    
+
     for link in links:
-        updated_liks.append({
+        updated_links.append({
                 'a': link.node1.ip_addr,
                 'b': link.node2.ip_addr,
                 })
+
     for node in nodes:
         updated_nodes.append({
                 'latitude': node.latitude,
@@ -131,7 +132,7 @@ def get_updates_from(updates_since):
         'nodes': updated_nodes,
         'links': updated_links,
         'time_str': time_str}
-
+    
     return json.dumps(update_map)
 
 
