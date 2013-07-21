@@ -7,10 +7,6 @@ DB_PATH = os.path.abspath(os.path.join(PROJECT_ROOT,'..'))
 import sys
 sys.path.append(PROJECT_ROOT)
 
-BROKER_URL = "django://" # tell to use the Django database as the message queue  
-import djcelery
-djcelery.setup_loader()
-
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -143,9 +139,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'server',
-    'kombu.transport.django',
-    'djcelery'
+    'server'
 )
 
 

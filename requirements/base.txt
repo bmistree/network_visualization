@@ -13,6 +13,3 @@ South==0.7.3
 # users
 django-registration
 
-
-#
-djcelery
