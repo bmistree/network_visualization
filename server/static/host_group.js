@@ -1,6 +1,7 @@
 var markers_array;
 var all_links;
 SIGMA_CANVAS_ID = 'sigma-canvas';
+var highlighted_subgroup = null;
 
 
 function Host(ip_addr,latitude,longitude)
@@ -97,17 +98,15 @@ HostGroup.prototype._draw_icon = function (map)
                 msg += '</li>';
             }
             msg += '</ul>';
+
+            if (highlighted_subgroup !== null)
+                comp_marker.setIcon(COMPUTER_SMALL_PNG_URL);
             
             comp_marker.setIcon(COMPUTER_PNG_URL);
-
+            highlighted_subgroup = comp_marker;
+            
             // also draw the network for the moused-over part
             this_param.draw_subgraph();
-        });
-    google.maps.event.addListener(
-        comp_marker,'mouseout',
-        function()
-        {
-            comp_marker.setIcon(COMPUTER_SMALL_PNG_URL);
         });
 };
 
