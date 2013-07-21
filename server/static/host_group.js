@@ -124,6 +124,10 @@ HostGroup.prototype.draw_subgraph = function()
     // clear previous sigma drawing
     $('#' + SIGMA_CANVAS_ID).empty();
 
+    // want all nodes in graph that are conneted to be the same color.
+    // create a connectivity_helper object to handle this.
+    var conn_helper = new ConnectivityHelper();
+    
     // draw new drawing
     var inner_group_links = [];
     for (var link_index in all_links)
@@ -133,9 +137,15 @@ HostGroup.prototype.draw_subgraph = function()
              (link.b in this.hosts_in_group_dict))
         {
             inner_group_links.push(link);
+
+            conn_helper.add_link(
+                this.hosts_in_group_dict[link.a],
+                this.hosts_in_group_dict[link.b]);
         }
     }
 
+    conn_helper.color();
+    
     // load into sigma.js
     var sigma_inst = sigma.init(
         document.getElementById(SIGMA_CANVAS_ID))
