@@ -190,12 +190,12 @@ HostGroup.prototype._draw_circle = function (map)
     markers_array.push(marker);
 };
 
-MAX_SIZE_TO_HOST = 100;
+MAX_SIZE_TO_HOST = 20;
 function get_circle_radius(map,num_hosts)
 {
     var normalized_size = Math.min(1, num_hosts/MAX_SIZE_TO_HOST);
     var map_zoom = map.getZoom();
-    var sixteen_zoom = 1200;
+    var sixteen_zoom = 100;
     var delta = 16 - map_zoom;
     return sixteen_zoom*Math.pow(2,delta)*normalized_size;
 }

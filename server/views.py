@@ -172,11 +172,6 @@ def add_node(ip,hostname):
     nodes = models.Node.objects.filter(ip_addr=canon_ip)
     if len(nodes) == 0:
         latitude, longitude = get_lat_long(canon_ip)
-
-        print '\nGotten latt + long\n'
-        print latitude
-        print longitude
-        print '\n\n'
         
         node = models.Node(
             hostname=hostname,ip_addr=canon_ip,latitude=latitude,
