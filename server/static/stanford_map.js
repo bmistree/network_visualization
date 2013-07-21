@@ -23,6 +23,11 @@ var markers_array = [];
 var last_poll_time = null;
 
 var map;
+
+// true if map is expanded (next click on map expand will contract it
+// to original size).
+var map_expanded = false;
+
 function map_initialize()
 {
     var map_options =  {
@@ -40,12 +45,36 @@ function map_initialize()
         map, 'zoom_changed',zoom_handler);
 
 
-    $('#submitter').click(
-        submit_listener);
+    $('#submitter').click(submit_listener);
+
+    // listen for request to expand or contract map
+    $('#map-expand').click(map_expand_clicked);
     
-    // tests();
     query_server();
 }
+
+function map_expand_clicked()
+{
+    // message display at bottom of div holding map
+    var click_text = 'Click here to contract map';
+    var class_to_remove = 'map-parent';
+    var class_to_add = 'overlay';
+    if (! map_expanded)
+    {
+        click_text = 'Click here to expand map';
+        var tmp = class_to_remove;
+        class_to_remove = class_to_add;
+        class_to_add = tmp;
+    }
+
+    $('#map-expand').html(click_text);
+    $('#map-parent').removeClass(class_to_remove);
+    $('#map-parent').addClass(class_to_add);
+    
+    google.maps.event.trigger(map, "resize");
+    map_expanded = !map_expanded;
+}
+
 
 function query_server()
 {
@@ -125,26 +154,6 @@ function get_cluster_radius()
     return sixteen_zoom*Math.pow(2,delta);
 }
 
-function tests()
-{
-    // create random hosts
-    add_host(STANFORD_LATITUDE, STANFORD_LONGITUDE,'test');
-    for (var i = 0; i < 10; ++i)
-        add_host(STANFORD_LATITUDE + i*.001, STANFORD_LONGITUDE,'test' +i);
-
-    // create random links
-    for (var i = 0; i < 10; ++i)
-    {
-        var from_index = Math.floor(Math.random()*all_hosts.length);
-        var to_index = Math.floor(Math.random()*all_hosts.length);
-
-        var from_host = all_hosts[from_index];
-        var to_host = all_hosts[to_index];
-        add_link(from_host.ip_addr,to_host.ip_addr);
-    }
-    
-    display_hosts();
-}
 
 function add_link(ip_addr_a,ip_addr_b)
 {

@@ -164,8 +164,6 @@ HostGroup.prototype.draw_subgraph = function()
         {
             sigma_inst.stopForceAtlas2();
         }, 3000);
-    
-    // sigma_inst.draw();
 
 };
 

@@ -33,6 +33,23 @@
         body: 100%;
       }
 
+      /** Used so that map gets expanded to full screen on click */
+      .overlay {  
+        position:absolute;
+        top:40px;
+        left:0;
+        width:100%;
+        height:92%;
+        z-index:1000;
+      }
+
+      /* lhs is the physical map parent */
+      .lhs {
+        width: 50%;
+        height: 90%;
+      }
+
+      /* rhs is the logical map parent */
       .rhs {
          position: absolute;
          width:47%;
@@ -40,6 +57,14 @@
          top: 60px;
          right: 1%;
       }
+
+      /* Covers the physical map of the network + div at bottom that
+         allows to expand and contract map.  */
+      .map-parent {
+         width: 100%;
+         height: 75%;
+      }
+      
       .logical-label {
          position: relative;
          top: -40px;
@@ -54,6 +79,12 @@
          background-color:#222;
          -moz-border-radius: 10px;
          border-radius: 10px;
+      }
+
+      .map-expand {
+         position: relative;
+         background-color: orange;
+         color: black;
       }
       
       map_canvas img {
@@ -110,15 +141,25 @@
       </div>
     </div>
 
-    
-    <div class="container-fluid" style="width:50%; height:100%">
 
-      
-      <div id="map-canvas" style="width:100%; height:75%;">
-        <!-- For google map -->
-      </div>
 
-    
+    <!-- Displays left half of screen: form for submitting more links as -->
+    <!-- well as physical layout of machines and links -->
+    <div class="container-fluid lhs">
+
+      <div id="map-parent" class="map-parent">
+        <!-- without explicitly adding width and height 100% to style, -->
+        <!-- nothing shows up -->
+        <div id="map-canvas" style="width:100%; height:100%;">
+          <!-- For google map -->
+        </div>
+
+        <div id="map-expand" class="map-expand">
+          Click here to expand map
+        </div>
+      </div> <!-- closes map parent -->
+
+      <br/>
       <div id="submission-div">
         <h4>The Stanford Network </h4>
           Scroll over a cluster on the map to see the logical layout
