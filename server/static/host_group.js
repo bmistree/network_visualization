@@ -98,7 +98,6 @@ HostGroup.prototype._draw_icon = function (map)
             }
             msg += '</ul>';
             
-            $('#' + NOTIFICATION_AREA_DIV_ID).html(msg);
             comp_marker.setIcon(COMPUTER_PNG_URL);
 
             // also draw the network for the moused-over part
@@ -108,7 +107,6 @@ HostGroup.prototype._draw_icon = function (map)
         comp_marker,'mouseout',
         function()
         {
-            $('#' + NOTIFICATION_AREA_DIV_ID).html('');
             comp_marker.setIcon(COMPUTER_SMALL_PNG_URL);
         });
 };
