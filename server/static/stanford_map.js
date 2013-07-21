@@ -9,6 +9,9 @@ UPDATE_PERIOD_MS = 5000;
 STANFORD_LATITUDE = 37.426;
 STANFORD_LONGITUDE = -122.17054;
 
+CENTER_LATITUDE = 38.685510;
+CENTER_LONGITUDE = -103.007813;
+
 NOTIFICATION_AREA_DIV_ID = 'notification-area';
 
 // each element is a Host object
@@ -33,7 +36,8 @@ function map_initialize()
     var map_options =  {
         zoom: 4,
         center: new google.maps.LatLng(
-            STANFORD_LATITUDE, STANFORD_LONGITUDE),
+            CENTER_LATITUDE, CENTER_LONGITUDE),
+            // STANFORD_LATITUDE, STANFORD_LONGITUDE),
         //mapTypeId: google.maps.MapTypeId.ROADMAP
         mapTypeId: google.maps.MapTypeId.SATELLITE
     };
