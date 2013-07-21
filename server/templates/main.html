@@ -32,14 +32,23 @@
         height: 100%;
         body: 100%;
       }
-      
-      .sidebar-nav-fixed {
+
+      .logical-label {
          position: absolute;
-         width:250px;
-         height: 70%;
-         top: 80px;
-         right: 3%;
+         top: 50px;
+         right: 5%;
+         color: #999999;
       }
+      .sigma-canvas {
+         position: absolute;
+         width:47%;
+         height: 85%;
+         top: 50px;
+         right: 1%;
+         border: 3px solid #e3e3e3;
+         background-color:#222;
+      }
+      
       map_canvas img {
         max-width: none;
       }      
@@ -84,45 +93,48 @@
     </div> <!-- closes navbar -->
 
 
-    <div class="container-fluid" style="width:100%; height:100%">
-      <!-- notification area -->
-      <div class="well sidebar-nav-fixed ">
-        <h4>The Stanford Netowrk </h4>
+    <!-- Used to render subgraph using sigma.js -->    
+    <div id="sigma-canvas" class="sigma-canvas">
+    </div>
+    <!-- Label on top of graph telling what it is -->
+    <div class="logical-label">
+      <h4> Logical network view </h4>
+    </div>
+
+    
+    <div class="container-fluid" style="width:50%; height:100%">
+
+      
+      <div id="map-canvas" style="width:100%; height:75%;">
+        <!-- For google map -->
+      </div>
+
+    <div id="notification-area">
+      <!-- Displays which nodes are part of group. -->
+    </div>
+      <div id="submission-div">
+        <h4>The Stanford Network </h4>
+          Scroll over a cluster on the map to see the logical layout
+          of the nodes inside.  Or, submit additional hosts and links
+          using the form below.
         <hr/>
 
         <!-- To submit more links -->
         <table>
           <tr>
-            <td>IP 1: </td><td><input type="text" id="ip_addr_1" name="ip_addr_1"/></td>
-          </tr>
-          <tr>
+            <td>IP 1: </td> <td><input type="text" id="ip_addr_1"  name="ip_addr_1"/></td>
+            <td style="width:15px"></td>
             <td>Host 1: </td><td><input type="text" id="hostname_1" name="hostname_1"/></td>
           </tr>
-          <tr><td></td><td></td></tr>
-          <tr><td></td><td></td></tr>        
           <tr>
             <td>IP 2: </td><td><input type="text" id="ip_addr_2" name="ip_addr_2"/></td>
-          </tr>
-          <tr>
+            <td style="width:15px"></td>
             <td>Host 2: </td><td><input type="text" id="hostname_2" name="hostname_2"/></td>
           </tr>
         </table>
-        <br/>
         <input type="submit" value="submit" id="submitter">
-        
-        
-        <div id="notification-area">          
-        </div>
-      </div><!--/.well -->  
+      </div> <!-- closes submission div -->
       
-      <div id="map-canvas" style="width:75%; height:100%;">
-      <!-- <div id="map-canvas" style="width:45%; height:100%;"> -->
-      </div>
-
-
-      <!-- Used to render subgraph using sigma.js -->
-      <div id="sigma-canvas" style="width: 400px; height: 400px; background-color:#222;">
-      </div>
 
       
     </div> <!-- closes container-fluid -->
