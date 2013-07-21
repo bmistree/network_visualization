@@ -31,7 +31,7 @@ var map_expanded = false;
 function map_initialize()
 {
     var map_options =  {
-        zoom: 16,
+        zoom: 4,
         center: new google.maps.LatLng(
             STANFORD_LATITUDE, STANFORD_LONGITUDE),
         //mapTypeId: google.maps.MapTypeId.ROADMAP
