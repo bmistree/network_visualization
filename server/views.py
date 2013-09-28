@@ -4,11 +4,21 @@ from django.http import HttpResponse
 import models
 import re, json
 import datetime
+import settings
 from geo import get_lat_long
 
+
 def index(request):
+    
+    render_params = {
+        'default_center_latitude': settings.MAP_DEFAULT_LATITUDE,
+        'default_center_longitude': settings.MAP_DEFAULT_LONGITUDE,
+        'default_zoom_level': settings.MAP_DEFAULT_ZOOM,
+        'default_map_satelite': 1 if settings.MAP_DEFAULT_SATELITE else 0
+        }
+    
     return render_to_response(
-        'main.html',{},
+        'main.html',render_params,
         context_instance=RequestContext(request))
 
 def add_links_response(str_msg):

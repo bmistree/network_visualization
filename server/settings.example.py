@@ -7,6 +7,13 @@ from basesettings import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# where the map initially starts
+MAP_DEFAULT_LATITUDE = 37.426
+MAP_DEFAULT_LONGITUDE = -122.17054
+MAP_DEFAULT_ZOOM = 15
+MAP_DEFAULT_SATELITE = False
+
+
 ADMINS = (
     ('behram mistree', 'bmistree@gmail.com'),
 )

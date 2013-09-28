@@ -4,13 +4,15 @@ var COMPUTER_SMALL_PNG_URL;
 var TO_SUBMIT_TO_URL;
 var TO_GET_UPDATES_URL;
 
+var DEFAULT_CENTER_LATITUDE;
+var DEFAULT_CENTER_LONGITUDE;
+var DEFAULT_ZOOM_LEVEL;
+// true if should display satelite, false otherwise
+var DEFAULT_MAP_SATELITE;
+
+// how frequently to check for new updates
 UPDATE_PERIOD_MS = 5000;
 
-STANFORD_LATITUDE = 37.426;
-STANFORD_LONGITUDE = -122.17054;
-
-CENTER_LATITUDE = 38.685510;
-CENTER_LONGITUDE = -103.007813;
 
 NOTIFICATION_AREA_DIV_ID = 'notification-area';
 
@@ -33,13 +35,18 @@ var map_expanded = false;
 
 function map_initialize()
 {
+    var map_type_id = DEFAULT_MAP_SATELITE ?
+        google.maps.MapTypeId.SATELLITE :
+        google.maps.MapTypeId.ROADMAP;
+    
     var map_options =  {
-        zoom: 4,
+        zoom: DEFAULT_ZOOM_LEVEL,
         center: new google.maps.LatLng(
-            CENTER_LATITUDE, CENTER_LONGITUDE),
-            // STANFORD_LATITUDE, STANFORD_LONGITUDE),
-        //mapTypeId: google.maps.MapTypeId.ROADMAP
-        mapTypeId: google.maps.MapTypeId.SATELLITE
+            DEFAULT_CENTER_LATITUDE, DEFAULT_CENTER_LONGITUDE),
+
+        // mapTypeId: google.maps.MapTypeId.ROADMAP
+        // mapTypeId: google.maps.MapTypeId.SATELLITE
+        mapTypeId: map_type_id
     };
     map = new google.maps.Map(
         document.getElementById('map-canvas'),

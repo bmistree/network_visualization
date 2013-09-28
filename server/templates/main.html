@@ -21,7 +21,12 @@
       COMPUTER_SMALL_PNG_URL = "{{ STATIC_URL }}/img/computer_small.png";
       TO_SUBMIT_TO_URL ="{% url views.add_links %}";
       TO_GET_UPDATES_URL = "{% url views.get_updates %}";
-      
+
+      DEFAULT_CENTER_LATITUDE = {{  default_center_latitude  }};
+      DEFAULT_CENTER_LONGITUDE = {{  default_center_longitude  }};
+      DEFAULT_ZOOM_LEVEL = {{  default_zoom_level  }};
+      DEFAULT_MAP_SATELITE = (1 == {{  default_map_satelite  }});
+
     </script>
 
     <style type="text/css">
