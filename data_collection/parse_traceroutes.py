@@ -3,7 +3,21 @@ from node import Node
 import re
 import sys
 
-def parse_traceroute_file(all_nodes,filename):
+def parse_traceroute_file(all_nodes,filename,strict=False):
+    '''
+    @param{boolean} strict --- True if only add a link between two
+    nodes that are next to each other in the traceroute output.  False
+    if will add link between nodes when there's a missing hop between
+    them.  For instance:
+
+    a.b.c.d
+    **** (time out)
+    e.f.g.h
+
+    with strict true, will add two nodes, a.b.c.d and e.f.g.h, but no
+    link between them.  With strict false, will add both nodes with a
+    link between them.
+    '''
     filer = open(filename,'r')
     prev_node = None
     for line in filer:
@@ -13,7 +27,12 @@ def parse_traceroute_file(all_nodes,filename):
         
             if prev_node != None:
                 node.bidirectional_add_connection(prev_node)
-        prev_node = node
+            # will add connections
+            if not strict:
+                prev_node = node
+        if strict:
+            prev_node = node
+        
     filer.close()
 
 def parse_traceroute_line(line):
