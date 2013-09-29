@@ -17,10 +17,14 @@ def ip_addr_to_num(str_ip_addr):
 def get_lat_long(ip_addr):
     # check if the lat-long of the ip address is already loaded in our
     # database
+    
     num_ip_addr = ip_addr_to_num(ip_addr)
     ip_range_list = models.IPRange.objects.filter(
         lower_bound__lte = num_ip_addr, upper_bound__gte = num_ip_addr)
 
+    ip_range_list = sorted(
+        ip_range_list,
+        key = lambda ip_range : (ip_range.upper_bound - ip_range.lower_bound))
 
     if len(ip_range_list) != 0:
         ip_range = ip_range_list[0]
