@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from node import Node
 import re
+import sys
 
 def parse_traceroute_file(all_nodes,filename):
     filer = open(filename,'r')
@@ -36,3 +37,28 @@ def parse_traceroute_line(line):
         return None
     return Node(match.group('ip_addr'),match.group('hostname'))
 
+def print_all_nodes(all_nodes):
+    for node in all_nodes.values():
+        node.print_ip_addr_hostname()
+
+def print_connections(all_nodes):
+
+    for node in all_nodes.values():
+        node.print_connections()
+        
+
+if __name__ == '__main__':
+    '''
+    ./parse_traceroutes.py <traceroute filename>
+    '''
+    
+    all_nodes = {}
+    parse_traceroute_file(all_nodes,sys.argv[1])
+    print_all_nodes(all_nodes)
+
+    print '\n******************\n'
+    print_connections(all_nodes)
+    
+    # for node in all_nodes.values():
+    #     if len(node.connections) != 0:
+    #         print node

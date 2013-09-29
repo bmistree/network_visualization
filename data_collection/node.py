@@ -50,6 +50,22 @@ class Node(object):
         # ip addresses to nodes
         self.connections = {}
 
+    def print_connections(self):
+        if len (self.connections) == 0:
+            print self.hostname + ' UNCONNECTED'
+            return
+
+        to_print = self.hostname
+
+        for node_connected_to in self.connections.values():
+            to_print += '--->  %s'  % node_connected_to.hostname
+            
+        print to_print
+
+        
+    def print_ip_addr_hostname(self):
+        print '%s   ::  %s ' % (self.ip_addr, self.hostname)
+        
     def bidirectional_add_connection(self,node):
         '''
         Adds self to node's connections.  Adds node to my connections.
