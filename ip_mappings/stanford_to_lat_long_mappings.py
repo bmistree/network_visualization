@@ -791,4 +791,6 @@ stanford_to_lat_long_mappings = {
     "Xanadu, 558 Mayfield Ave": [37.419896, -122.16667],
     "Yang & Yamazaki Environment & Energy Bldg": [37.428204, -122.175624],
     "Yost House": [37.424106, -122.166076],
-    "Zeta Alpha Phi, 710 Bowdoin": [37.421384, -122.161757]}
+    "Zeta Alpha Phi, 710 Bowdoin": [37.421384, -122.161757],
+    "35 Angell Court": [37.42446, -122.15383],
+    }

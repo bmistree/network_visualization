@@ -15,6 +15,11 @@ def ip_addr_to_num(str_ip_addr):
 
 
 def get_lat_long(ip_addr):
+    '''
+    @returns (a,b):
+       (-1, -1) --- If cannot geolocate ip address.  Otherwise
+       lat,long.
+    '''
     # check if the lat-long of the ip address is already loaded in our
     # database
     
@@ -40,6 +45,9 @@ def get_lat_long(ip_addr):
     resp = conn.getresponse()
     py_data = json.loads(resp.read())
     conn.close()
+
+    if (py_data['latitude'] == 0 ) and (py_data['longitude'] == 0):
+        return -1, -1
 
     return py_data['latitude'], py_data['longitude']
     

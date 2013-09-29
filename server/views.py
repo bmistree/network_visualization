@@ -188,7 +188,7 @@ def add_node(ip,hostname):
             longitude=longitude)
         node.save()
         return node,True
-
+    
     return nodes[0],False
 
 

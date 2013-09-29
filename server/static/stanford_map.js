@@ -160,7 +160,8 @@ function zoom_handler()
 function get_cluster_radius()
 {
     var map_zoom = map.getZoom();
-    var sixteen_zoom = .002;
+    // var sixteen_zoom = .002;
+    var sixteen_zoom = .00002;
     var delta = 16 - map_zoom;
     return sixteen_zoom*Math.pow(2,delta);
 }
@@ -209,6 +210,10 @@ function display_hosts()
         }
         if (! added)
         {
+            if ((host_to_add.latitude == -1) &&
+                (host_to_add.longitude == -1))
+                continue;
+            
             var host_group = new HostGroup(
                 host_to_add.latitude,host_to_add.longitude);
             host_ips_to_groups[host_to_add.ip_addr] = host_group;
@@ -239,6 +244,9 @@ function create_connections_between_hosts()
         var group_a = host_ips_to_groups[link.a];
         var group_b = host_ips_to_groups[link.b];
 
+        if ((group_a === undefined) || (group_b === undefined))
+            continue;
+        
         if (group_b.id < group_a.id)
         {
             var tmp = group_b;
