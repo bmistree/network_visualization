@@ -24,10 +24,17 @@ def index(request):
 def add_links_response(str_msg):
     return HttpResponse(str_msg,mimetype='text/html')
 
-def add_links(request):
+def add_links_no_user(request):
+    return add_links(request,False)
+
+def add_links(request,check_user=True):
     '''
     Called in response to get
     '''
+    if check_user:
+        if not request.user.is_authenticated():
+            return HttpResponse('Must log in to add links',mimetype='text/html')
+    
     ip1 = request.GET.get('ip_addr_1',None)
     ip2 = request.GET.get('ip_addr_2',None)
         

@@ -175,21 +175,25 @@
           using the form below.
         <hr/>
 
+        {% if user.is_authenticated %}
         <!-- To submit more links -->
-        <table>
-          <tr>
-            <td>IP 1: </td> <td><input type="text" id="ip_addr_1"  name="ip_addr_1"/></td>
-            <td style="width:15px"></td>
-            <td>Host 1: </td><td><input type="text" id="hostname_1" name="hostname_1"/></td>
-          </tr>
-          <tr>
-            <td>IP 2: </td><td><input type="text" id="ip_addr_2" name="ip_addr_2"/></td>
-            <td style="width:15px"></td>
-            <td>Host 2: </td><td><input type="text" id="hostname_2" name="hostname_2"/></td>
-          </tr>
-        </table>
-        <input type="submit" value="submit" id="submitter">
-      </div> <!-- closes submission div -->
+            <table>
+              <tr>
+                <td>IP 1: </td> <td><input type="text" id="ip_addr_1"  name="ip_addr_1"/></td>
+                <td style="width:15px"></td>
+                <td>Host 1: </td><td><input type="text" id="hostname_1" name="hostname_1"/></td>
+              </tr>
+              <tr>
+                <td>IP 2: </td><td><input type="text" id="ip_addr_2" name="ip_addr_2"/></td>
+                <td style="width:15px"></td>
+                <td>Host 2: </td><td><input type="text" id="hostname_2" name="hostname_2"/></td>
+              </tr>
+            </table>
+            <input type="submit" value="submit" id="submitter">
+          </div> <!-- closes submission div -->
+        {% else %}
+          <p> Must log in to submit links </p>
+        {% endif %}
 
     </div> <!-- closes container-fluid -->
     
