@@ -176,6 +176,7 @@
         <hr/>
 
         {% if user.is_authenticated %}
+        Logged in as {{ user.username }}.
         <!-- To submit more links -->
             <table>
               <tr>
@@ -192,7 +193,7 @@
             <input type="submit" value="submit" id="submitter">
           </div> <!-- closes submission div -->
         {% else %}
-          <p> Must log in to submit links </p>
+          <p> Must <a href="webauth/login/">log in</a> to submit links </p>
         {% endif %}
 
     </div> <!-- closes container-fluid -->
