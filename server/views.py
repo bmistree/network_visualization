@@ -9,7 +9,9 @@ from geo import get_lat_long
 
 
 def index(request):
-    
+    if request.user.is_authenticated():
+        models.UserProfile.check_create_user_profile(request.user)
+
     render_params = {
         'default_center_latitude': settings.MAP_DEFAULT_LATITUDE,
         'default_center_longitude': settings.MAP_DEFAULT_LONGITUDE,
@@ -93,25 +95,31 @@ def add_links(request,check_user=False):
 
 
 def create_link(node1, node2):
+
+    user = None
+    if request.user.is_authenticated():
+        user = request.user
+    
     # check if link already exists
     # all_links = node1.link_set.all()
     all_one_way_links = node1.node1.all()
     for link in all_one_way_links:
         if ((link.node1.ip_addr == node2.ip_addr) or
             (link.node2.ip_addr == node2.ip_addr)):
-            link.increment_and_check_authenticate()
+            link.increment_and_check_authenticate(user)
             return False
-        
+
+
     all_other_way_links = node1.node2.all()
     for link in all_other_way_links:
         if ((link.node1.ip_addr == node2.ip_addr) or
             (link.node2.ip_addr == node2.ip_addr)):
-            link.increment_and_check_authenticate()
+            link.increment_and_check_authenticate(user)
             return False
 
     link = models.Links(node1=node1,node2=node2)
     link.save()
-    link.increment_and_check_authenticate()
+    link.increment_and_check_authenticate(user)
     return True
 
 def get_updates_from(updates_since):
@@ -155,7 +163,15 @@ def get_updates_from(updates_since):
     
     return json.dumps(update_map)
 
-
+def scoreboard(request):
+    render_params = {
+        'users': models.UserProfile.objects.all()
+        }
+    
+    return render_to_response(
+        'scoreboard.html',render_params,
+        context_instance=RequestContext(request))
+    
     
 def get_updates(request):
     '''
@@ -178,6 +194,10 @@ def add_node(ip,hostname):
        b {bool} --- True if created a new node.  False otherwise.
     '''
 
+    user = None
+    if request.user.is_authenticated():
+        user = request.user
+
     if hostname == None:
         return None,False
 
@@ -195,12 +215,12 @@ def add_node(ip,hostname):
             hostname=hostname,ip_addr=canon_ip,latitude=latitude,
             longitude=longitude)
         node.save()
-        node.increment_and_check_authenticate()
+        node.increment_and_check_authenticate(user)
         return node,True
     else:
         # increment the number of adders for this node
         node = nodes[0]
-        node.increment_and_check_authenticate()
+        node.increment_and_check_authenticate(user)
     
     return nodes[0],False
 

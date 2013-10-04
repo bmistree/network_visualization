@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+
+{% for user in users  %}
+
+  {% for node in user.nodes_uploaded.all %}
+    {{ node.ip_addr }} <br/>
+  {% endfor %}
+{% endfor %}
+
+{% endblock body_block %}

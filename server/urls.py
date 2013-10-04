@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^add_links$','views.add_links',name='add_links'),
     url(r'^add_links_no_user$','views.add_links_no_user',name='add_links_no_user'),
     url(r'^get_updates$','views.get_updates',name='get_updates'),
+    url(r'^scoreboard$','views.scoreboard',name='scoreboard'),
     url(r'^webauth/', include('webauth.urls')), 
 )
 
