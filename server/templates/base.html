@@ -1,26 +1,135 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <title> CS144 Map Stanford </title>
 
-    <script type="text/JavaScript" src="{{ STATIC_URL }}/js/d3.v2.min.js"></script> 
-    <script type="text/JavaScript" src="{{ STATIC_URL }}/jquery-ui/js/jquery-1.7.2.min.js"></script> 
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
 
-    <script type="text/JavaScript" src="{{ STATIC_URL }}/sigma.min.js"></script> 
-    <script type="text/JavaScript" src="{{ STATIC_URL }}/sigma.forceatlas2.js"></script> 
-    <link href="{{ STATIC_URL }}/css/map.css" rel="stylesheet" type="text/css">
+    <script src="{{ STATIC_URL }}/sigma.min.js"></script>
+    <script src="{{ STATIC_URL }}/sigma.forceatlas2.js"></script>
+    
+    <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="{{ STATIC_URL }}/jquery-2.0.2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}/bootstrap/js/bootstrap.min.js">
+    </script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}/connectivity_helper.js">
+    </script>
+
+
+    <style type="text/css">
+      body {
+        padding-top: 65px;
+        padding-bottom: 40px;
+        height: 80%;
+        width:95%;
+      }
+      html {
+        height: 100%;
+        body: 100%;
+      }
+
+      /** Used so that map gets expanded to full screen on click */
+      .overlay {  
+        position:absolute;
+        top:40px;
+        left:0;
+        width:100%;
+        height:92%;
+        z-index:1000;
+      }
+
+      /* lhs is the physical map parent */
+      .lhs {
+        width: 50%;
+        height: 90%;
+      }
+
+      /* rhs is the logical map parent */
+      .rhs {
+         position: absolute;
+         width:47%;
+         height: 85%;
+         top: 60px;
+         right: 1%;
+      }
+
+      /* Covers the physical map of the network + div at bottom that
+         allows to expand and contract map.  */
+      .map-parent {
+         width: 100%;
+         height: 75%;
+      }
+      
+      .logical-label {
+         position: relative;
+         top: -40px;
+         left: 20px;
+         color: #999999;
+      }
+      .sigma-canvas {
+         position: relative;
+         width:100%;
+         height: 100%;
+         border: 3px solid #e3e3e3;
+         background-color:#222;
+         -moz-border-radius: 10px;
+         border-radius: 10px;
+      }
+
+      .map-expand {
+         position: relative;
+         background-color: orange;
+         color: black;
+      }
+      
+      #map-canvas img {
+        max-width: none;
+      }      
+    </style>    
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="{{ STATIC_URL }}/stanford_map.js"></script>
+    <script src="{{ STATIC_URL }}/host_group.js"></script>
 
     
     {% block head_block %}
     {% endblock head_block %}
-    
+
   </head>
+    
 
   <body>
+    <!-- Takes care of the navbar at top of page -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Networking</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+            </p>
 
+            <ul class="nav">
+            </ul>
+          </div><!--/.nav-collapse -->
+
+          
+        </div> <!-- closes container fluid -->
+      </div> <!-- closes navbar-inner -->
+    </div> <!-- closes navbar -->
+
+    
     {% block body_block %}
     {% endblock body_block %}
-    
     
   </body>
 
 </html>
+
