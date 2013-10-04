@@ -27,34 +27,34 @@ def add_links_response(str_msg):
 def add_links_no_user(request):
     return add_links(request,False)
 
-def add_links(request,check_user=True):
+def add_links(request,check_user=False):
     '''
     Called in response to get
     '''
     if check_user:
         if not request.user.is_authenticated():
             return HttpResponse('Must log in to add links',mimetype='text/html')
-    
+        
     ip1 = request.GET.get('ip_addr_1',None)
     ip2 = request.GET.get('ip_addr_2',None)
-        
+    
     hostname1 = request.GET.get('hostname_1',None)
     hostname2 = request.GET.get('hostname_2',None)
-
+    
     node1,new_node1 = add_node(ip1,hostname1)
 
     if node1 == None:
         return add_links_response('require first hostname and ip addr to be specified')
-
+    
     node2,new_node2 = add_node(ip2,hostname2)
 
     new_link = False
     if node2 != None:
         # create a link
         new_link = create_link(node1,node2)
-    
-    msgs_to_display = []
 
+    msgs_to_display = []
+    
     if not new_node1:
         msgs_to_display.append(
             'Already had a node with ip address ' + str(ip1) + '.  Keep trying.')
@@ -65,7 +65,7 @@ def add_links(request,check_user=True):
             '!')
         msgs_to_display.append(msg)
         
-
+        
     if (ip2 != None) and (ip2 != ''):
         if not new_node2:
             msg = (
@@ -88,6 +88,7 @@ def add_links(request,check_user=True):
             msgs += ' and ' + str(ip2) + '!  Hit refresh to view.'
             msgs_to_display.append(msg)
 
+            
     return add_links_response(msgs_to_display)
 
 
@@ -98,17 +99,19 @@ def create_link(node1, node2):
     for link in all_one_way_links:
         if ((link.node1.ip_addr == node2.ip_addr) or
             (link.node2.ip_addr == node2.ip_addr)):
+            link.increment_and_check_authenticate()
             return False
         
     all_other_way_links = node1.node2.all()
     for link in all_other_way_links:
         if ((link.node1.ip_addr == node2.ip_addr) or
             (link.node2.ip_addr == node2.ip_addr)):
+            link.increment_and_check_authenticate()
             return False
 
     link = models.Links(node1=node1,node2=node2)
     link.save()
-
+    link.increment_and_check_authenticate()
     return True
 
 def get_updates_from(updates_since):
@@ -125,8 +128,8 @@ def get_updates_from(updates_since):
         nodes = models.Node.objects.all()
     else:
         dt = datetime.datetime.strptime(updates_since, '%Y-%m-%d %H:%M:%S')
-        links = models.Links.objects.filter(creation_date__gte = dt)
-        nodes = models.Node.objects.filter(creation_date__gte = dt)
+        links = models.Links.objects.filter(creation_date__gte = dt, authenticated=True)
+        nodes = models.Node.objects.filter(creation_date__gte = dt, authenticated=True)
         
     time_str = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     updated_links = []
@@ -185,16 +188,19 @@ def add_node(ip,hostname):
     if canon_ip == None:
         return None,False
 
-    
     nodes = models.Node.objects.filter(ip_addr=canon_ip)
     if len(nodes) == 0:
         latitude, longitude = get_lat_long(canon_ip)
-        
         node = models.Node(
             hostname=hostname,ip_addr=canon_ip,latitude=latitude,
             longitude=longitude)
         node.save()
+        node.increment_and_check_authenticate()
         return node,True
+    else:
+        # increment the number of adders for this node
+        node = nodes[0]
+        node.increment_and_check_authenticate()
     
     return nodes[0],False
 

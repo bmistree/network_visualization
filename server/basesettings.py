@@ -8,6 +8,8 @@ import sys
 sys.path.append(PROJECT_ROOT)
 
 
+NUM_REQUIRED_BEFORE_NODE_OR_LINK_GOES_LIVE = 3
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
