@@ -6,7 +6,7 @@ import re, json
 import datetime
 import settings
 from geo import get_lat_long
-
+from get_host_from_ip import get_hostname
 
 def index(request):
     if request.user.is_authenticated():
@@ -208,7 +208,14 @@ def add_node(ip,hostname):
     if canon_ip == None:
         return None,False
 
-    nodes = models.Node.objects.filter(ip_addr=canon_ip)
+    # previously, nodes were uniquely identified by their ip
+    # addresses.  Changing so that now they'll be uniquely identified
+    # by hostname.
+    hostname = get_hostname(canon_ip)
+    if hostname == '':
+        return None,False
+    
+    nodes = models.Node.objects.filter(hostname=hostname)
     if len(nodes) == 0:
         latitude, longitude = get_lat_long(canon_ip)
         node = models.Node(
