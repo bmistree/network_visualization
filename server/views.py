@@ -153,7 +153,7 @@ def get_updates_from(updates_since):
         updated_nodes.append({
                 'latitude': node.latitude,
                 'longitude': node.longitude,
-                'ip_addr': node.ip_addr
+                'ip_addr': node.hostname
                 })
 
     update_map = {
