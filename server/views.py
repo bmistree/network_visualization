@@ -42,18 +42,17 @@ def add_links(request,check_user=False):
     
     hostname1 = request.GET.get('hostname_1',None)
     hostname2 = request.GET.get('hostname_2',None)
-    
-    node1,new_node1 = add_node(ip1,hostname1)
 
+    node1,new_node1 = add_node(request,ip1,hostname1)
     if node1 == None:
         return add_links_response('require first hostname and ip addr to be specified')
-    
-    node2,new_node2 = add_node(ip2,hostname2)
 
+    node2,new_node2 = add_node(request,ip2,hostname2)
+    
     new_link = False
     if node2 != None:
         # create a link
-        new_link = create_link(node1,node2)
+        new_link = create_link(request,node1,node2)
 
     msgs_to_display = []
     
@@ -66,7 +65,6 @@ def add_links(request,check_user=False):
             'You were the first to upload node with ip address ' + str(ip1) +
             '!')
         msgs_to_display.append(msg)
-        
         
     if (ip2 != None) and (ip2 != ''):
         if not new_node2:
@@ -90,11 +88,10 @@ def add_links(request,check_user=False):
             msgs += ' and ' + str(ip2) + '!  Hit refresh to view.'
             msgs_to_display.append(msg)
 
-            
     return add_links_response(msgs_to_display)
 
 
-def create_link(node1, node2):
+def create_link(request,node1, node2):
 
     user = None
     if request.user.is_authenticated():
@@ -145,8 +142,8 @@ def get_updates_from(updates_since):
 
     for link in links:
         updated_links.append({
-                'a': link.node1.ip_addr,
-                'b': link.node2.ip_addr,
+                'a': link.node1.hostname,
+                'b': link.node2.hostname,
                 })
 
     for node in nodes:
@@ -182,7 +179,7 @@ def get_updates(request):
     return HttpResponse(updates,mimetype='appliction/json')
     
 
-def add_node(ip,hostname):
+def add_node(request,ip,hostname):
     '''
     @returns a,b ---
     
@@ -193,29 +190,29 @@ def add_node(ip,hostname):
 
        b {bool} --- True if created a new node.  False otherwise.
     '''
-
     user = None
     if request.user.is_authenticated():
         user = request.user
-
+        
     if hostname == None:
         return None,False
-
+    
     if hostname == '':
         return None,False
-
+    
     canon_ip = canonicalize_ip(ip)
     if canon_ip == None:
         return None,False
-
+    
     # previously, nodes were uniquely identified by their ip
     # addresses.  Changing so that now they'll be uniquely identified
     # by hostname.
     hostname = get_hostname(canon_ip)
     if hostname == '':
         return None,False
-    
+
     nodes = models.Node.objects.filter(hostname=hostname)
+    
     if len(nodes) == 0:
         latitude, longitude = get_lat_long(canon_ip)
         node = models.Node(
@@ -228,7 +225,7 @@ def add_node(ip,hostname):
         # increment the number of adders for this node
         node = nodes[0]
         node.increment_and_check_authenticate(user)
-    
+        
     return nodes[0],False
 
 
