@@ -3,7 +3,7 @@
 import socket
 
 def get_hostname(ip_addr):
-    hostnmae = ''
+    hostname = ip_addr
     try:
         hostname,_,_ = socket.gethostbyaddr(ip_addr)
     except:
