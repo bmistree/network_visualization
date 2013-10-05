@@ -11,7 +11,7 @@ var DEFAULT_ZOOM_LEVEL;
 var DEFAULT_MAP_SATELITE;
 
 // how frequently to check for new updates
-UPDATE_PERIOD_MS = 5000;
+UPDATE_PERIOD_MS = 10000;
 
 
 NOTIFICATION_AREA_DIV_ID = 'notification-area';
@@ -161,7 +161,7 @@ function get_cluster_radius()
 {
     var map_zoom = map.getZoom();
     // var sixteen_zoom = .002;
-    var sixteen_zoom = .00002;
+    var sixteen_zoom = .0002;
     var delta = 16 - map_zoom;
     return sixteen_zoom*Math.pow(2,delta);
 }

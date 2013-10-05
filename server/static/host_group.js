@@ -84,7 +84,7 @@ HostGroup.prototype._draw_icon = function (map)
 
     var this_param = this;
     google.maps.event.addListener(
-        comp_marker,'mouseover',
+        comp_marker,'click',
         function()
         {
             var msg = 'Cluster has ' + this_param.hosts_in_group.length + ' hosts';
